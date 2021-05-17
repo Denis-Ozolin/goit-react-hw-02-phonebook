@@ -14,14 +14,22 @@ class App extends Component{
     ],
     filter: ''
   }
-    
-  formSubmitHandler = data => {
-    this.state.contacts.forEach(contact => (
-      contact.name === data.name && alert('is alredy in contacts')
-    ))
 
-    this.setState(({contacts}) =>
-      ({ contacts: [ data, ...contacts]}));
+
+    formSubmitHandler = data => {
+    this.state.contacts.filter((contact) => (
+      contact.name === data.name ? this.onNoChange(data.name) :
+        this.onCheck(data)
+    ))
+  }
+
+  onCheck = (data) => (
+    this.setState(({ contacts }) =>
+          ({ contacts: [data, ...contacts] }))
+  )
+
+  onNoChange = (data) => {
+    alert({data} + ' is alredy in contacts');
   }
 
   changeFilter = (e) => {
