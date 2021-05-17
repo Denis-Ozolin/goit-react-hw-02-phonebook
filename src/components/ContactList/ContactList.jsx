@@ -1,10 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const ContactsList = ({ arr }) => {
+const ContactsList = ({ arr, onClick }) => {
   return (
       <ul>
-        {arr.map(item => (
-            <li key={uuidv4()}>{item.name}: {item.number}</li>
+      {arr.map(item => (
+          <li key={uuidv4()}>{item.name}: {item.number}
+            <button type="button" onClick={onClick}>Delete</button>
+          </li>
         ))}
       </ul >
   )

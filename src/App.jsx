@@ -15,21 +15,25 @@ class App extends Component{
     filter: ''
   }
 
+  // formSubmitHandler = data => {
+  //   this.state.contacts.find(contact => {
+  //     return contact.name === data.name && alert(data.name + ' is alredy in contacts');
+  //   })
 
-    formSubmitHandler = data => {
-    this.state.contacts.filter((contact) => (
-      contact.name === data.name ? this.onNoChange(data.name) :
-        this.onCheck(data)
-    ))
+  //   this.setState(({ contacts }) =>
+  //     ({ contacts: [data, ...contacts] }));
+  // }
+
+  formSubmitHandler = data => {   
+    this.onCheckName(data.name)?alert(data.name + ' is alredy in contacts'):
+    this.setState(({ contacts }) =>
+      ({ contacts: [data, ...contacts] }));
   }
 
-  onCheck = (data) => (
-    this.setState(({ contacts }) =>
-          ({ contacts: [data, ...contacts] }))
-  )
-
-  onNoChange = (data) => {
-    alert({data} + ' is alredy in contacts');
+  onCheckName = name => {
+    return this.state.contacts.find(contact => 
+      contact.name.toLowerCase() === name.toLowerCase()
+    )
   }
 
   changeFilter = (e) => {
@@ -45,6 +49,10 @@ class App extends Component{
     )
   }
 
+  deleteContact = () => {
+    console.log('button delete');
+  }
+
   render() {
     const { filter } = this.state;
     const filteredContacts = this.getFilteredContacts();
@@ -55,7 +63,7 @@ class App extends Component{
         <ContactForm onSubmit={this.formSubmitHandler} />
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
-        <ContactList arr={filteredContacts}/>
+        <ContactList arr={filteredContacts} onClick={this.deleteContact}/>
       </div>
     )
   }
