@@ -1,8 +1,9 @@
 import { Component } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import ContactForm from "./components/ContactForm/ContactForm";
-import ContactList from "./components/ContactList/ContactList";
-import Filter from "./components/Filter/Filter";
+import ContactForm from "../ContactForm/ContactForm";
+import ContactList from "../ContactList/ContactList";
+import Filter from "../Filter/Filter";
+import styles from "./App.module.css";
 
 class App extends Component{
   state = {
@@ -49,8 +50,10 @@ class App extends Component{
     )
   }
 
-  deleteContact = () => {
-    console.log('button delete');
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId)
+    }))
   }
 
   render() {
@@ -58,10 +61,10 @@ class App extends Component{
     const filteredContacts = this.getFilteredContacts();
 
     return (
-      <div>
-        <h1>Phonebook</h1>
+      <div className={styles.phonebook}>
+        <h1 className={styles.phonebook__title}>Phonebook</h1>
         <ContactForm onSubmit={this.formSubmitHandler} />
-        <h2>Contacts</h2>
+        <h2 className={styles.contacts__title}>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
         <ContactList arr={filteredContacts} onClick={this.deleteContact}/>
       </div>
